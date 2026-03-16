@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_prompt_gradient"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:alpha="0.7"
+        android:textColor="@color/xi_text_secondary"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/promptText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:lineSpacingExtra="12dp"
+        android:textColor="@color/xi_text_primary"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tapHintText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:alpha="0.8"
+        android:text="@string/hint_tap_to_write"
+        android:textColor="@color/xi_text_secondary"
+        android:textSize="14sp" />
+</FrameLayout>
