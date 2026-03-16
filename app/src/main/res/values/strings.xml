@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">隙 Xi</string>
+    <string name="title_today">今日</string>
+    <string name="title_gallery">画廊</string>
+    <string name="title_profile">自我</string>
+    <string name="title_zen_writing">禅意书写</string>
+    <string name="hint_tap_to_write">轻触任意处，开始书写</string>
+    <string name="action_freeze">定格</string>
+    <string name="action_back">返回</string>
+</resources>

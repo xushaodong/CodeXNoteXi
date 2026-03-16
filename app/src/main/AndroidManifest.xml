@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Xi">
+
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.snapshot.SnapshotResultActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Xi.Fullscreen" />
+
+        <activity
+            android:name=".ui.writing.ZenWritingActivity"
+            android:exported="false"
+            android:label="@string/title_zen_writing"
+            android:theme="@style/Theme.Xi.Fullscreen"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

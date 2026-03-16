@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/xi_bg_dark"
+    android:padding="24dp">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/action_back"
+        android:src="@drawable/ic_back_minimal"
+        app:tint="@color/xi_text_secondary" />
+
+    <EditText
+        android:id="@+id/writingInput"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:background="@android:color/transparent"
+        android:gravity="top|start"
+        android:hint="此刻，你看见了什么？"
+        android:textColorHint="#66A8A29E"
+        android:inputType="textMultiLine|textCapSentences"
+        android:lineSpacingExtra="12dp"
+        android:textColor="@color/xi_text_primary"
+        android:textCursorDrawable="@null"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/wordHintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:text="你已写了很多，随时可以停"
+            android:textColor="@color/xi_text_secondary"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/freezeButton"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/action_freeze"
+            app:backgroundTint="@color/xi_amber" />
+    </LinearLayout>
+
+</FrameLayout>

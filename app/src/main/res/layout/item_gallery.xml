@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/xi_bg_paper"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/xi_border"
+    app:strokeWidth="0.5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:textColor="@color/xi_text_secondary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/quoteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="serif"
+            android:lineSpacingExtra="4dp"
+            android:textStyle="italic"
+            android:textColor="@color/xi_deep_amber"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/contentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="#57534E"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/xi_amber" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

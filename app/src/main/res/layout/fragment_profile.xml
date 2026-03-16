@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/xi_bg_dark"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自我"
+            android:textColor="@color/xi_text_primary"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/streakText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_chip"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/xi_text_primary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="V1.0 提供：基础统计、订阅入口、设置入口。\nV1.1 将加入情绪图谱与思维周期洞察。"
+            android:textColor="@color/xi_text_secondary"
+            android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="设置"
+            app:backgroundTint="@color/xi_amber" />
+
+    </LinearLayout>
+</ScrollView>

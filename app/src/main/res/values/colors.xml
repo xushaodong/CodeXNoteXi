@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="xi_amber">#D97706</color>
+    <color name="xi_deep_amber">#92400E</color>
+    <color name="xi_bg_dark">#1C1917</color>
+    <color name="xi_bg_surface">#292524</color>
+    <color name="xi_bg_paper">#FFFBF5</color>
+    <color name="xi_text_primary">#FAFAF9</color>
+    <color name="xi_text_secondary">#A8A29E</color>
+    <color name="xi_border">#44403C</color>
+    <color name="xi_logo_bg">#1C1917</color>
+</resources>
