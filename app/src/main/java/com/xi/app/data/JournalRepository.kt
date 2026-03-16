@@ -1,35 +1,66 @@
 package com.xi.app.data
 
+import android.content.Context
+import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.concurrent.atomic.AtomicLong
 
-object JournalRepository {
-    private val idGenerator = AtomicLong(0)
-    private val entries = MutableStateFlow<List<JournalEntry>>(emptyList())
+class JournalRepository private constructor(context: Context) {
+    private val database = AppDatabase.getDatabase(context)
+    private val journalDao = database.journalDao()
+    
+    private val _entries = MutableStateFlow<List<JournalEntry>>(emptyList())
+    val entries: StateFlow<List<JournalEntry>> = _entries.asStateFlow()
 
-    fun observeEntries(): StateFlow<List<JournalEntry>> = entries.asStateFlow()
+    init {
+        // 观察数据库变化并更新内存状态
+        CoroutineScope(Dispatchers.IO).launch {
+            journalDao.getAllEntries().collect {
+                _entries.value = it
+            }
+        }
+    }
 
-    fun record(prompt: String, content: String): JournalEntry {
+    suspend fun record(prompt: String, content: String): JournalEntry {
+        Log.d("JournalRepository", "Recording new entry to Database.")
+        
         val quote = content.split("。", "！", "？", "\n").firstOrNull { it.isNotBlank() }
             ?.trim()
             ?.take(32)
             ?: "在裂缝中，寻找光。"
 
         val entry = JournalEntry(
-            id = idGenerator.incrementAndGet(),
             date = LocalDate.now().toString(),
             prompt = prompt,
             content = content,
             quote = quote
         )
-        entries.value = listOf(entry) + entries.value
-        return entry
+        
+        val id = journalDao.insert(entry)
+        Log.d("JournalRepository", "Entry recorded to DB with id: $id")
+        
+        return entry.copy(id = id)
     }
 
-    fun streakDays(): Int {
-        return entries.value.map { it.date }.distinct().size
+    suspend fun streakDays(): Int {
+        return journalDao.getStreakCount()
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: JournalRepository? = null
+
+        fun getInstance(context: Context): JournalRepository {
+            return INSTANCE ?: synchronized(this) {
+                val instance = JournalRepository(context)
+                INSTANCE = instance
+                instance
+            }
+        }
     }
 }

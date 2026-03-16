@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
@@ -12,22 +13,35 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
 import com.xi.app.data.JournalRepository
 import com.xi.app.databinding.ActivityZenWritingBinding
 import com.xi.app.ui.snapshot.SnapshotResultActivity
+import kotlinx.coroutines.launch
 
 class ZenWritingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityZenWritingBinding
+    private lateinit var repository: JournalRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityZenWritingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        repository = JournalRepository.getInstance(this)
+
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         hideSystemUi()
 
         val prompt = intent.getStringExtra(EXTRA_PROMPT).orEmpty()
+        val existingContent = intent.getStringExtra(EXTRA_CONTENT)
+        
+        Log.d("ZenWritingActivity", "Activity created. Prompt: $prompt, hasExistingContent: ${existingContent != null}")
+
+        if (existingContent != null) {
+            binding.writingInput.setText(existingContent)
+            binding.writingInput.setSelection(existingContent.length)
+        }
 
         binding.backButton.setOnClickListener { confirmExit() }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -39,13 +53,23 @@ class ZenWritingActivity : AppCompatActivity() {
         }
 
         binding.freezeButton.setOnClickListener {
-            vibrateHeavy()
-            val content = binding.writingInput.text?.toString().orEmpty().ifBlank { "今天我先从沉默开始。" }
-            val entry = JournalRepository.record(prompt, content)
-            startActivity(Intent(this, SnapshotResultActivity::class.java).apply {
-                putExtra(SnapshotResultActivity.EXTRA_ENTRY_ID, entry.id)
-            })
-            finish()
+            Log.d("ZenWritingActivity", "Freeze button clicked")
+            lifecycleScope.launch {
+                try {
+                    vibrateHeavy()
+                    val content = binding.writingInput.text?.toString().orEmpty().ifBlank { "今天我先从沉默开始。" }
+                    
+                    val entry = repository.record(prompt, content)
+                    
+                    val intent = Intent(this@ZenWritingActivity, SnapshotResultActivity::class.java).apply {
+                        putExtra(SnapshotResultActivity.EXTRA_ENTRY_ID, entry.id)
+                    }
+                    startActivity(intent)
+                    finish()
+                } catch (e: Exception) {
+                    Log.e("ZenWritingActivity", "Error during saving: ${e.message}", e)
+                }
+            }
         }
     }
 
@@ -66,11 +90,16 @@ class ZenWritingActivity : AppCompatActivity() {
     }
 
     private fun vibrateHeavy() {
-        val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        try {
+            val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } catch (e: Exception) {
+            Log.w("ZenWritingActivity", "Vibration failed: ${e.message}")
+        }
     }
 
     companion object {
         const val EXTRA_PROMPT = "extra_prompt"
+        const val EXTRA_CONTENT = "extra_content"
     }
 }

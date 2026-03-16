@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -53,6 +54,12 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.8.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.8.2")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+    // Room
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     testImplementation("junit:junit:4.13.2")
 }

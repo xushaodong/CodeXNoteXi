@@ -1,50 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/xi_bg_paper"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:background="@color/xi_bg_dark">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="今日定格"
-        android:textColor="@color/xi_deep_amber"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    <ImageButton
+        android:id="@+id/closeButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:layout_weight="1"
-        android:background="@drawable/bg_rounded_panel"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/action_back"
+        android:src="@drawable/ic_back_minimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/xi_text_secondary" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#DDD6CE" />
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/closeButton">
 
-        <TextView
-            android:id="@+id/quoteText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textColor="#5B4634"
-            android:textSize="14sp" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="32dp">
 
-        <TextView
-            android:id="@+id/dateCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:textColor="#8A786A"
-            android:textSize="11sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/dateCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:letterSpacing="0.2"
+                android:text="2024.03.16"
+                android:textColor="@color/xi_text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-</LinearLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/xi_amber" />
+
+            <TextView
+                android:id="@+id/quoteText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:lineSpacingExtra="10dp"
+                android:textColor="@color/xi_amber"
+                android:textSize="22sp"
+                android:textStyle="italic" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="48dp"
+                android:background="@color/xi_border" />
+
+            <TextView
+                android:id="@+id/fullContentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="serif"
+                android:gravity="start"
+                android:lineSpacingExtra="12dp"
+                android:textColor="@color/xi_text_primary"
+                android:textSize="17sp"
+                android:alpha="0.85" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:fontFamily="serif"
+                android:text="— 见字如晤 —"
+                android:textColor="@color/xi_text_secondary"
+                android:textSize="11sp"
+                android:alpha="0.4" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

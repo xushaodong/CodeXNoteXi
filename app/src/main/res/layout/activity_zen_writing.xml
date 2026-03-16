@@ -13,7 +13,7 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/action_back"
         android:src="@drawable/ic_back_minimal"
-        android:tint="@color/xi_text_secondary" />
+        app:tint="@color/xi_text_secondary" />
 
     <EditText
         android:id="@+id/writingInput"
@@ -23,7 +23,7 @@
         android:background="@android:color/transparent"
         android:gravity="top|start"
         android:hint="此刻，你看见了什么？"
-        android:hintTextColor="#66A8A29E"
+        android:textColorHint="#66A8A29E"
         android:inputType="textMultiLine|textCapSentences"
         android:lineSpacingExtra="12dp"
         android:textColor="@color/xi_text_primary"
