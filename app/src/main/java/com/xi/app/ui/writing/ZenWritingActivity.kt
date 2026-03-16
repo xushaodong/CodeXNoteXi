@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 class ZenWritingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityZenWritingBinding
     private lateinit var repository: JournalRepository
+    private var originalContent: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +35,18 @@ class ZenWritingActivity : AppCompatActivity() {
         hideSystemUi()
 
         val prompt = intent.getStringExtra(EXTRA_PROMPT).orEmpty()
-        val existingContent = intent.getStringExtra(EXTRA_CONTENT)
+        originalContent = intent.getStringExtra(EXTRA_CONTENT)
         
-        Log.d("ZenWritingActivity", "Activity created. Prompt: $prompt, hasExistingContent: ${existingContent != null}")
+        Log.d("ZenWritingActivity", "Activity created. Prompt: $prompt, hasExistingContent: ${originalContent != null}")
 
-        if (existingContent != null) {
-            binding.writingInput.setText(existingContent)
-            binding.writingInput.setSelection(existingContent.length)
+        if (originalContent != null) {
+            binding.writingInput.setText(originalContent)
+            binding.writingInput.setSelection(originalContent?.length ?: 0)
         }
 
-        binding.backButton.setOnClickListener { confirmExit() }
+        binding.backButton.setOnClickListener { handleExit() }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() = confirmExit()
+            override fun handleOnBackPressed() = handleExit()
         })
 
         binding.writingInput.doAfterTextChanged { text ->
@@ -70,6 +71,23 @@ class ZenWritingActivity : AppCompatActivity() {
                     Log.e("ZenWritingActivity", "Error during saving: ${e.message}", e)
                 }
             }
+        }
+    }
+
+    private fun handleExit() {
+        val currentContent = binding.writingInput.text?.toString().orEmpty()
+        
+        // 逻辑判断：
+        // 1. 如果是从画廊过来（originalContent != null）且没有修改过内容
+        // 2. 如果是新写的（originalContent == null）且内容为空
+        // 则直接退出，不弹窗
+        val isNotModified = originalContent != null && currentContent == originalContent
+        val isEmptyNew = originalContent == null && currentContent.isBlank()
+
+        if (isNotModified || isEmptyNew) {
+            finish()
+        } else {
+            confirmExit()
         }
     }
 
