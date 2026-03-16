@@ -11,6 +11,9 @@ import com.xi.app.ui.today.TodayPromptFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    
+    // 使用 Map 存储 Fragment 实例，实现复用以保持状态
+    private val fragments = mutableMapOf<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,22 +21,42 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
-            switchFragment(TodayPromptFragment())
+            // 初始化首页并显示
+            showFragment(R.id.nav_today)
         }
 
         binding.bottomNav.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_today -> switchFragment(TodayPromptFragment())
-                R.id.nav_gallery -> switchFragment(GalleryFragment())
-                R.id.nav_profile -> switchFragment(ProfileFragment())
-            }
+            showFragment(it.itemId)
             true
         }
     }
 
-    private fun switchFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .commit()
+    /**
+     * 使用 add/hide/show 模式管理 Fragment
+     * 相比 replace，这种方式能完美保留 Fragment 内部的 View 状态（如滚动位置）
+     */
+    private fun showFragment(navId: Int) {
+        val transaction = supportFragmentManager.beginTransaction()
+        
+        // 1. 隐藏当前所有已存在的 Fragment
+        fragments.values.forEach { transaction.hide(it) }
+        
+        // 2. 获取或创建目标 Fragment
+        var fragment = fragments[navId]
+        if (fragment == null) {
+            fragment = when (navId) {
+                R.id.nav_today -> TodayPromptFragment()
+                R.id.nav_gallery -> GalleryFragment()
+                R.id.nav_profile -> ProfileFragment()
+                else -> throw IllegalArgumentException("Unknown navId")
+            }
+            fragments[navId] = fragment
+            transaction.add(R.id.container, fragment)
+        } else {
+            // 如果已存在，直接显示
+            transaction.show(fragment)
+        }
+        
+        transaction.commit()
     }
 }

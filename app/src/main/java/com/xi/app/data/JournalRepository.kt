@@ -29,10 +29,13 @@ class JournalRepository private constructor(context: Context) {
     suspend fun record(prompt: String, content: String): JournalEntry {
         Log.d("JournalRepository", "Recording new entry to Database.")
         
-        val quote = content.split("。", "！", "？", "\n").firstOrNull { it.isNotBlank() }
-            ?.trim()
-            ?.take(32)
-            ?: "在裂缝中，寻找光。"
+        // 优化金句提取逻辑：优先取第一行，如果没有则取第一句
+        val firstLine = content.lines().firstOrNull { it.isNotBlank() }?.trim()
+        val quote = if (!firstLine.isNullOrEmpty()) {
+            if (firstLine.length > 32) firstLine.take(32) + "..." else firstLine
+        } else {
+            "在裂缝中，寻找光。"
+        }
 
         val entry = JournalEntry(
             date = LocalDate.now().toString(),

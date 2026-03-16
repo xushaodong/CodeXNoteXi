@@ -30,15 +30,29 @@ class TodayPromptFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * 在 onHiddenChanged 中监听 Fragment 的可见性变化
+     * 确保每次点击底部导航回到主页时，都会随机刷新提示词
+     */
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            refreshPrompt()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+        refreshPrompt()
+    }
+
+    private fun refreshPrompt() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val streak = repository.streakDays()
-            val prompt = promptEngine.promptFor(streak)
+            val prompt = promptEngine.getRandomPrompt()
             binding.promptText.text = prompt
             binding.dateText.text = promptEngine.todayDate()
 
+            // 点击整个页面进入写作模式
             binding.root.setOnClickListener {
                 startActivity(Intent(requireContext(), ZenWritingActivity::class.java).apply {
                     putExtra(ZenWritingActivity.EXTRA_PROMPT, prompt)

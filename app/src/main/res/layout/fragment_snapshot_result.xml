@@ -46,11 +46,7 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/xi_amber" />
+            <!-- 移除了原本这里的竖线 View -->
 
             <TextView
                 android:id="@+id/quoteText"

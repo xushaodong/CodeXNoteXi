@@ -18,6 +18,7 @@ class GalleryAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
+        // 回归最简单：使用 match_parent。宽度由 RecyclerView 的 padding 决定。
         val binding = ItemGalleryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return GalleryViewHolder(binding)
     }

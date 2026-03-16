@@ -1,60 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/writingRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/xi_bg_dark"
-    android:padding="24dp">
+    android:background="@drawable/bg_rainy_night">
+
+    <!-- 顶部状态栏占位，用于全屏沉浸 -->
+    <View
+        android:id="@+id/statusBarSpacer"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:background="@android:color/transparent"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/action_back"
+        android:padding="12dp"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_back_minimal"
-        app:tint="@color/xi_text_secondary" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarSpacer"
+        app:tint="#475569" />
+
+    <TextView
+        android:id="@+id/promptIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="serif"
+        android:textColor="#334155"
+        android:textSize="13sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
 
     <EditText
         android:id="@+id/writingInput"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="48dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="100dp"
         android:background="@android:color/transparent"
+        android:fontFamily="serif"
         android:gravity="top|start"
-        android:hint="此刻，你看见了什么？"
-        android:textColorHint="#66A8A29E"
+        android:hint="此刻，雨声是唯一的听众..."
         android:inputType="textMultiLine|textCapSentences"
-        android:lineSpacingExtra="12dp"
-        android:textColor="@color/xi_text_primary"
+        android:lineSpacingExtra="14dp"
+        android:textColor="@color/xi_flow_text"
+        android:textColorHint="@color/xi_flow_hint"
         android:textCursorDrawable="@null"
-        android:textSize="18sp" />
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/promptIndicator" />
 
     <LinearLayout
+        android:id="@+id/actionPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/wordHintText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:text="你已写了很多，随时可以停"
-            android:textColor="@color/xi_text_secondary"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="serif"
+            android:text="思想在流淌，不要停下来"
+            android:textColor="#475569"
             android:textSize="12sp"
             android:visibility="gone" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/freezeButton"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="@string/action_freeze"
-            app:backgroundTint="@color/xi_amber" />
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.2"
+            android:text="定格瞬间"
+            android:textColor="@color/xi_amber"
+            android:textSize="15sp"
+            app:rippleColor="#20D97706" />
     </LinearLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

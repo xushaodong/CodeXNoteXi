@@ -9,4 +9,10 @@
     <color name="xi_text_secondary">#A8A29E</color>
     <color name="xi_border">#44403C</color>
     <color name="xi_logo_bg">#1C1917</color>
+    <color name="xi_frost_card_bg">#1A1E293B</color>
+    <!-- 雨夜心流模式色彩 -->
+    <color name="xi_flow_bg_top">#0F172A</color>
+    <color name="xi_flow_bg_bottom">#1E293B</color>
+    <color name="xi_flow_text">#E2E8F0</color>
+    <color name="xi_flow_hint">#475569</color>
 </resources>

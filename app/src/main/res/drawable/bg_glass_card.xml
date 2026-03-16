@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 毛玻璃卡片内部效果：高光边缘 + 内部渐变 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 主体：半透明冷蓝白 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1AFFFFFF" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+
+    <!-- 顶部高光条：模拟玻璃反光 -->
+    <item android:bottom="60dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#20FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:type="linear" />
+            <corners android:topLeftRadius="20dp" android:topRightRadius="20dp" />
+        </shape>
+    </item>
+
+    <!-- 1px 描边高光（模拟玻璃边缘折射） -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="1dp"
+                android:color="#30FFFFFF" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 全局朦胧雾感遮罩：模拟隔着磨砂玻璃看雨景的效果 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 底部加深，增加纵深感 -->
+    <item>
+        <shape>
+            <gradient
+                android:angle="270"
+                android:startColor="#00000000"
+                android:centerColor="#1A0F172A"
+                android:endColor="#400F172A"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <!-- 细微白色噪点感（模拟玻璃磨砂） -->
+    <item>
+        <shape>
+            <gradient
+                android:angle="45"
+                android:startColor="#08FFFFFF"
+                android:centerColor="#00FFFFFF"
+                android:endColor="#06FFFFFF"
+                android:type="linear" />
+        </shape>
+    </item>
+
+</layer-list>
