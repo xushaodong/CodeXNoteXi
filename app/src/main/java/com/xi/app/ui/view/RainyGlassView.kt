@@ -1,7 +1,5 @@
 package com.xi.app.ui.view
 
-import android.R.attr.height
-import android.R.attr.width
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -28,11 +26,7 @@ class RainyGlassView @JvmOverloads constructor(
         strokeCap = Paint.Cap.ROUND
     }
     private val bgPaint = Paint().apply {
-        shader = LinearGradient(
-            0f, 0f, 0f, 1f,
-            intArrayOf(0xFF0F172A.toInt(), 0xFF1E293B.toInt(), 0xFF020617.toInt()),
-            null, Shader.TileMode.CLAMP
-        )
+        // 初始 Shader，会在 onSizeChanged 中更新
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -45,41 +39,61 @@ class RainyGlassView @JvmOverloads constructor(
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
         bgPaint.shader = LinearGradient(
             0f, 0f, 0f, h.toFloat(),
             intArrayOf(0xFF0F172A.toInt(), 0xFF1E293B.toInt(), 0xFF020617.toInt()),
             null, Shader.TileMode.CLAMP
         )
         // 初始化雨滴
+        drops.clear()
         repeat(80) { drops.add(randomDrop(w, h, true)) }
     }
 
     private fun randomDrop(w: Int, h: Int, randomY: Boolean = false) = RainDrop(
         x = (0..w).random().toFloat(),
-        y = if (randomY) (0..h).random().toFloat() else -20f,
-        speed = (8..20).random().toFloat(),
-        length = (20..60).random().toFloat(),
-        alpha = (30..90).random() / 100f
+        y = if (randomY) (0..h).random().toFloat() else -60f,
+        speed = (10..25).random().toFloat(),
+        length = (30..80).random().toFloat(),
+        alpha = (20..70).random() / 100f
     )
 
     private fun updateDrops() {
         val h = height
         val w = width
-        drops.replaceAll { drop ->
+        if (h <= 0 || w <= 0) return
+        
+        for (drop in drops) {
             drop.y += drop.speed
-            if (drop.y > h + drop.length) randomDrop(w, h) else drop
+            if (drop.y > h + drop.length) {
+                val newDrop = randomDrop(w, h)
+                drop.x = newDrop.x
+                drop.y = newDrop.y
+                drop.speed = newDrop.speed
+                drop.length = newDrop.length
+                drop.alpha = newDrop.alpha
+            }
         }
     }
 
     override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
+        
         drops.forEach { drop ->
             paint.alpha = (drop.alpha * 255).toInt()
-            paint.strokeWidth = 1.5f
-            canvas.drawLine(drop.x, drop.y, drop.x - 2f, drop.y + drop.length, paint)
+            paint.strokeWidth = 2f
+            canvas.drawLine(drop.x, drop.y, drop.x - 1f, drop.y + drop.length, paint)
         }
     }
 
-    override fun onAttachedToWindow() { super.onAttachedToWindow(); handler.post(runnable) }
-    override fun onDetachedFromWindow() { super.onDetachedFromWindow(); handler.removeCallbacks(runnable) }
+    override fun onAttachedToWindow() { 
+        super.onAttachedToWindow()
+        handler.post(runnable) 
+    }
+    
+    override fun onDetachedFromWindow() { 
+        super.onDetachedFromWindow()
+        handler.removeCallbacks(runnable) 
+    }
 }

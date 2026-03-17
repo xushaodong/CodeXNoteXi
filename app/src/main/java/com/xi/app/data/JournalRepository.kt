@@ -50,6 +50,10 @@ class JournalRepository private constructor(context: Context) {
         return entry.copy(id = id)
     }
 
+    suspend fun delete(prompt: String, content: String) {
+        journalDao.deleteByContent(prompt, content)
+    }
+
     suspend fun streakDays(): Int {
         return journalDao.getStreakCount()
     }

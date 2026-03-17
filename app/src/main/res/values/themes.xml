@@ -12,4 +12,21 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">false</item>
     </style>
+
+    <!-- 精美弹窗样式 -->
+    <style name="Xi_AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:windowBackground">@drawable/bg_dialog_zen</item>
+        <item name="android:textColorPrimary">@color/xi_text_primary</item>
+        <item name="android:textColorSecondary">@color/xi_text_secondary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Xi_Dialog_Button_Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Xi_Dialog_Button_Negative</item>
+    </style>
+
+    <style name="Xi_Dialog_Button_Positive" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">#EF4444</item> <!-- 红色，警告色 -->
+    </style>
+
+    <style name="Xi_Dialog_Button_Negative" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/xi_text_secondary</item>
+    </style>
 </resources>

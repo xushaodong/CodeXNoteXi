@@ -1,7 +1,11 @@
 package com.xi.app.ui.main
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.xi.app.R
 import com.xi.app.databinding.ActivityMainBinding
@@ -16,9 +20,18 @@ class MainActivity : AppCompatActivity() {
     private val fragments = mutableMapOf<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 1. 开启全面屏适配 (Edge-to-Edge)
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 2. 处理窗口缩进 (Window Insets)，确保底部导航栏不被手势栏遮挡
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNav) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(bottom = systemBars.bottom)
+            insets
+        }
 
         if (savedInstanceState == null) {
             // 初始化首页并显示

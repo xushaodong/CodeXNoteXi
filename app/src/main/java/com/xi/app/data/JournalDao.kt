@@ -1,6 +1,7 @@
 package com.xi.app.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
@@ -15,4 +16,7 @@ interface JournalDao {
 
     @Query("SELECT COUNT(DISTINCT date) FROM journal_entries")
     suspend fun getStreakCount(): Int
+
+    @Query("DELETE FROM journal_entries WHERE content = :content AND prompt = :prompt")
+    suspend fun deleteByContent(prompt: String, content: String)
 }
